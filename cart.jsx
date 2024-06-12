@@ -166,6 +166,7 @@ const Products = (props) => {
       let {name, country, cost, instock} = item;
       return {name, country, cost, instock};
     });
+    console.log(newItems);
     console.log(items);
     setItems([...items, ...newItems]);
     console.log(items);
@@ -192,7 +193,6 @@ const Products = (props) => {
         <form
           onSubmit={(event) => {
             restockProducts(query);
-            console.log(query);
             console.log(`Restock called on ${query}`);
             event.preventDefault();
           }}
