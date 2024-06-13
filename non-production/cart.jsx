@@ -90,7 +90,7 @@ const Products = (props) => {
   } = ReactBootstrap;
   //  Fetch Data
   const { Fragment, useState, useEffect, useReducer } = React;
-  const [query, setQuery] = useState("http://localhost:1337/api/products");
+  const [query, setQuery] = React.useState("http://localhost:1337/api/products");
   const [{ data, isLoading, isError }, doFetch] = useDataApi(
     "http://localhost:1337/api/products",
     {
