@@ -1,22 +1,23 @@
 import { useState, useEffect, Fragment, useReducer } from "react";
 import {Card, Accordion, Button, Container, Row, Col, Image, Input } from 'react-bootstrap';
-import useDataApi from "../helpers/useDataApi";
-import products from "../helpers/productVar";
+import getProducts from "../helpers/getProducts";
 
+const products = [
+  { name: "Apples", country: "Italy", cost: 3, instock: 10 },
+  { name: "Oranges", country: "Spain", cost: 4, instock: 3 },
+  { name: "Beans", country: "USA", cost: 2, instock: 5 },
+  { name: "Cabbage", country: "USA", cost: 1, instock: 8 },
+];
 
 const Products = (props) => {
+  
   const [items, setItems] = useState(products);
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
  
   //  Fetch Data
-  const [query, setQuery] = useState("http://localhost:1337/api/products");
-  const [{ data, isLoading, isError }, doFetch] = useDataApi(
-    "http://localhost:1337/api/products",
-    {
-      data: [],
-    }
-  );
+  const [data, setData] = useState(products);
+ 
   console.log(`Rendering Products ${JSON.stringify(data)}`);
   // Fetch Data
   const addToCart = (e) => {
@@ -80,9 +81,9 @@ const Products = (props) => {
     return newTotal;
   };
   // TODO: implement the restockProducts function
-  const restockProducts = (url) => {
-    doFetch(url);
-    let newItems = data.map((item)=>{
+  const restockProducts = async () => {
+    const moreItems = await getProducts();
+    let newItems = moreItems.map((item)=>{
       let {name, country, cost, instock} = item;
       return {name, country, cost, instock};
     });
@@ -112,16 +113,12 @@ const Products = (props) => {
       <Row>
         <form
           onSubmit={(event) => {
-            restockProducts(query);
-            console.log(`Restock called on ${query}`);
+            restockProducts();
+            console.log(`Restock called`);
             event.preventDefault();
           }}
         >
-          <input
-            type="text"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-          />
+          
           <button type="submit">ReStock Products</button>
         </form>
       </Row>

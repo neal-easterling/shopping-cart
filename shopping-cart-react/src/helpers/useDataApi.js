@@ -1,5 +1,6 @@
 import { useState, useEffect, useReducer } from "react";
-import axios from 'axios';
+//import { axios } from 'axios';
+const axios = null;
 
 const dataFetchReducer = (state, action) => {
   switch (action.type) {
