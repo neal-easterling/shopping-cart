@@ -9,6 +9,5 @@ const moreProducts = [
 
 export default function getProducts(){
   return Promise.resolve(moreProducts);
-  
 }
 
